@@ -343,15 +343,14 @@
                 <p>Due: <input type="date" id="dueDate" class="input-field inline-block w-40"></p>
             </div>
             <div class="company-details">
-                <!-- Inline SVG Logo -->
-                <svg class="company-logo" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg" fill="#004d40">
-                    <rect width="100" height="50" rx="10" ry="10" fill="#004d40"/>
-                    <text x="50" y="30" font-family="Arial, sans-serif" font-size="18" fill="#ffffff" text-anchor="middle" alignment-baseline="middle">LOGO</text>
-                </svg>
-                <h2>Your Name / Company</h2>
-                <p>your@email.com</p>
-                <p>+91-XXXXXXXXXX</p>
-                <p>www.yoursite.com</p>
+                <!-- Static Logo Image -->
+                <img src="./logo.png" onerror="this.onerror=null;this.src='https://placehold.co/90x45/004d40/ffffff?text=LOGO';" alt="Company Logo" class="company-logo">
+                <h2>MAHSUA INDIA</h2>
+                <p>mahsuaindia@gmail.com</p>
+                <p>+91 9752107808</p>
+                <p>+91 9977666219</p>
+                <p>www.mahsua.com</p>
+                <p>AE 545, HB Colony, Pithampur Industrial Area, Indore, MP, 454775</p>
             </div>
         </div>
 
@@ -551,12 +550,14 @@
                     const selectedProduct = products.find(p => p.id === productSelect.value);
                     if (selectedProduct) {
                         rateInput.value = selectedProduct.price.toFixed(2);
-                        if (selectedProduct.id === 'custom') {
-                            customDescriptionInput.classList.remove('hidden');
-                            customDescriptionInput.value = ''; // Clear custom description
-                        } else {
-                            customDescriptionInput.classList.add('hidden');
-                            customDescriptionInput.value = selectedProduct.description; // Set description for PDF
+                        if (customDescriptionInput) { // Check if customDescriptionInput exists
+                            if (selectedProduct.id === 'custom') {
+                                customDescriptionInput.classList.remove('hidden');
+                                customDescriptionInput.value = ''; // Clear custom description
+                            } else {
+                                customDescriptionInput.classList.add('hidden');
+                                customDescriptionInput.value = selectedProduct.description; // Set description for PDF
+                            }
                         }
                     }
                     updateTotals(); // Recalculate based on new rate
@@ -625,8 +626,8 @@
                     });
 
                     // Hide original element and insert new span
-                    originalElement.style.display = 'none';
-                    originalElement.parentNode.insertBefore(textSpan, originalElement.nextSibling);
+                    originalElement.style.display = 'none'; // Use display:none for simpler restoration
+                    originalElement.parentNode.insertBefore(textSpan, originalElement.nextSibling); // Insert after original
                 };
 
                 // Query all necessary elements *here*, inside the click handler for freshness
@@ -663,20 +664,20 @@
                     const qtyInput = row.querySelector('.service-qty');
                     const rateInput = row.querySelector('.service-rate');
                     const removeItemBtn = row.querySelector('.remove-item');
-                    const actionColCell = row.querySelector('td.action-col');
+                    const actionColCell = row.querySelector('td.action-col'); // Get cell for removal
 
                     // Get final description text
                     let finalDescriptionText = '';
-                    if (productSelect && productSelect.value !== 'custom') {
+                    if (productSelect && productSelect.value !== 'custom') { // Add null check for productSelect
                         const selectedProduct = products.find(p => p.id === productSelect.value);
                         if (selectedProduct) {
                             finalDescriptionText = selectedProduct.description;
                         }
-                    } else if (customDescriptionInput) {
+                    } else if (customDescriptionInput) { // Add null check for customDescriptionInput
                         finalDescriptionText = customDescriptionInput.value;
                     }
 
-                    // Store and hide original description elements
+                    // For description, specifically hide both and insert one span
                     if (productSelect) {
                         elementsToRestore.push({
                             original: productSelect,
@@ -685,7 +686,8 @@
                             originalDisplay: productSelect.style.display,
                             originalClasses: productSelect.className,
                             originalValue: productSelect.value,
-                            isInput: false, isSelect: true
+                            isInput: false,
+                            isSelect: true
                         });
                         productSelect.style.display = 'none';
                     }
@@ -697,12 +699,11 @@
                             originalDisplay: customDescriptionInput.style.display,
                             originalClasses: customDescriptionInput.className,
                             originalValue: customDescriptionInput.value,
-                            isInput: true, isSelect: false
+                            isInput: true,
+                            isSelect: false
                         });
                         customDescriptionInput.style.display = 'none';
                     }
-
-                    // Insert single text span for description
                     if (descriptionCell) {
                         const pdfDescriptionSpan = document.createElement('span');
                         pdfDescriptionSpan.className = 'pdf-temp-text';
@@ -712,10 +713,12 @@
                         pdfDescriptionSpan.style.boxSizing = 'border-box';
                         pdfDescriptionSpan.style.wordWrap = 'break-word';
                         pdfDescriptionSpan.style.overflowWrap = 'break-word';
-                        pdfDescriptionSpan.style.backgroundColor = 'transparent';
-                        descriptionCell.appendChild(pdfDescriptionSpan);
-                        elementsToRestore.push({ tempSpan: pdfDescriptionSpan, parent: descriptionCell }); // Store temp span for removal
+                        pdfDescriptionSpan.style.backgroundColor = 'transparent'; // Ensure no gray background
+                        descriptionCell.appendChild(pdfDescriptionSpan); // Append to cell
+                        // Store this span for removal later
+                        elementsToRestore.push({ tempSpan: pdfDescriptionSpan, parent: descriptionCell });
                     }
+
 
                     // Handle Quantity input
                     hideAndInsertTextSpan(qtyInput, qtyInput.value);
@@ -737,7 +740,7 @@
                     }
                 });
 
-                // Hide the action column header (th)
+                // Hide the action column header
                 const actionColHeader = document.querySelector('th.action-col');
                 if (actionColHeader) {
                     elementsToRestore.push({
