@@ -353,8 +353,8 @@
             </div>
             <div class="company-details">
                 <!-- Static Logo Image -->
-                <!-- Ensure 'assets/logo.png' exists in your project root -->
-                <img src="./logo.png" onerror="this.onerror=null;this.src='https://placehold.co/90x45/004d40/ffffff?text=LOGO';" alt="Company Logo" class="company-logo">
+                <!-- Ensure './logo.png' exists in your project root -->
+                <img src="./assets/logo.png" onerror="this.onerror=null;this.src='https://placehold.co/90x45/004d40/ffffff?text=LOGO';" alt="Company Logo" class="company-logo">
                 <h2>MAHSUA INDIA</h2>
                 <p>mahsuaindia@gmail.com</p>
                 <p>+91 9752107808</p>
@@ -777,7 +777,8 @@
                     margin: 10,
                     filename: `invoice_${document.getElementById('invoiceNumber').value}.pdf`, // Dynamic filename
                     image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true, useCORS: true },
+                    // Increased scale and dpi for better clarity
+                    html2canvas: { scale: 4, logging: true, dpi: 400, letterRendering: true, useCORS: true },
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
 
