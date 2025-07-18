@@ -47,9 +47,13 @@
             color: #4b5563;
             line-height: 1.3;
         }
+        /* Adjusted company-details for right alignment using flexbox */
         .company-details {
-            text-align: right;
+            display: flex; /* Use flexbox */
+            flex-direction: column; /* Stack items vertically */
+            align-items: flex-end; /* Align items to the right */
             margin-top: 0.25rem; /* Reduced margin */
+            text-align: right; /* Ensure text itself is right-aligned */
         }
         .company-details h2 {
             font-size: 1.05rem; /* Slightly smaller Your Name / Company */
@@ -65,7 +69,7 @@
         .company-logo {
             max-width: 90px; /* Slightly smaller logo size */
             height: auto;
-            margin-left: auto; /* Align to right */
+            margin-left: auto; /* Push logo to the right within flex container */
             margin-bottom: 0.4rem;
             display: block; /* Ensure it takes its own line */
         }
@@ -306,8 +310,13 @@
                 align-items: flex-start;
             }
             .company-details {
-                text-align: left;
+                text-align: left; /* Align to left on small screens */
+                align-items: flex-start; /* Align items to left on small screens */
                 margin-top: 1rem;
+            }
+            .company-logo {
+                margin-left: 0; /* Remove auto margin on small screens */
+                margin-right: auto; /* Push logo to left on small screens */
             }
             th, td {
                 padding: 0.4rem 0.5rem;
@@ -344,6 +353,7 @@
             </div>
             <div class="company-details">
                 <!-- Static Logo Image -->
+                <!-- Ensure 'assets/logo.png' exists in your project root -->
                 <img src="./logo.png" onerror="this.onerror=null;this.src='https://placehold.co/90x45/004d40/ffffff?text=LOGO';" alt="Company Logo" class="company-logo">
                 <h2>MAHSUA INDIA</h2>
                 <p>mahsuaindia@gmail.com</p>
