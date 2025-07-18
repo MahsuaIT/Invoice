@@ -35,10 +35,12 @@
             align-items: flex-start; /* Align items to the top */
             margin-bottom: 1.25rem; /* Reduced margin */
             flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 1rem; /* Add gap between flex items */
         }
         .invoice-details {
-            width: 48%; /* Give it explicit width */
+            flex: 1; /* Allow it to grow and shrink */
             min-width: 250px; /* Ensure it doesn't get too small */
+            max-width: 45%; /* Limit its max width to give more space to company-details */
         }
         .invoice-details h1 {
             font-size: 2.1rem; /* Slightly smaller font for INVOICE */
@@ -58,8 +60,8 @@
             align-items: flex-end; /* Align items to the right */
             margin-top: 0.25rem; /* Reduced margin */
             text-align: right; /* Ensure text itself is right-aligned */
-            width: 48%; /* Give it explicit width */
-            min-width: 250px; /* Ensure it doesn't get too small */
+            flex: 1; /* Allow it to grow and shrink */
+            min-width: 280px; /* Increased min-width to accommodate long address */
         }
         .company-details h2 {
             font-size: 1.05rem; /* Slightly smaller Your Name / Company */
@@ -73,6 +75,7 @@
             line-height: 1.3;
             white-space: normal; /* Ensure text wraps normally */
             word-break: break-word; /* Break long words */
+            text-align: right; /* Explicitly apply text-align to paragraphs */
         }
         .company-logo {
             max-width: 90px; /* Slightly smaller logo size */
@@ -316,6 +319,7 @@
             .header-section {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 0; /* Remove gap when stacked */
             }
             .company-details {
                 text-align: left; /* Align to left on small screens */
@@ -331,6 +335,7 @@
             .invoice-details {
                 width: 100%; /* Take full width on small screens */
                 min-width: unset; /* Remove min-width on small screens */
+                max-width: unset; /* Remove max-width on small screens */
             }
             th, td {
                 padding: 0.4rem 0.5rem;
@@ -367,7 +372,7 @@
             </div>
             <div class="company-details">
                 <!-- Static Logo Image -->
-                <!-- Ensure './logo.png' exists in your project root -->
+                <!-- Ensure 'assets/logo.png' exists in your project root -->
                 <img src="./logo.png" onerror="this.onerror=null;this.src='https://placehold.co/90x45/004d40/ffffff?text=LOGO';" alt="Company Logo" class="company-logo">
                 <h2>MAHSUA INDIA</h2>
                 <p>mahsuaindia@gmail.com</p>
